@@ -1,0 +1,125 @@
+#include <iostream>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+vector<string> karte1[10];
+map<vector<string>, short> karte2;
+
+void build()
+{
+    vector<string> v;
+    v.push_back("*.");
+    v.push_back("..");
+    v.push_back("..");
+    karte1[1] = v;
+    karte2[v] = 1;
+    v.clear();
+    v.push_back("*.");
+    v.push_back("*.");
+    v.push_back("..");
+    karte1[2] = v;
+    karte2[v] = 2;
+    v.clear();
+    v.push_back("**");
+    v.push_back("..");
+    v.push_back("..");
+    karte1[3] = v;
+    karte2[v] = 3;
+    v.clear();
+    v.push_back("**");
+    v.push_back(".*");
+    v.push_back("..");
+    karte1[4] = v;
+    karte2[v] = 4;
+    v.clear();
+    v.push_back("*.");
+    v.push_back(".*");
+    v.push_back("..");
+    karte1[5] = v;
+    karte2[v] = 5;
+    v.clear();
+    v.push_back("**");
+    v.push_back("*.");
+    v.push_back("..");
+    karte1[6] = v;
+    karte2[v] = 6;
+    v.clear();
+    v.push_back("**");
+    v.push_back("**");
+    v.push_back("..");
+    karte1[7] = v;
+    karte2[v] = 7;
+    v.clear();
+    v.push_back("*.");
+    v.push_back("**");
+    v.push_back("..");
+    karte1[8] = v;
+    karte2[v] = 8;
+    v.clear();
+    v.push_back(".*");
+    v.push_back("*.");
+    v.push_back("..");
+    karte1[9] = v;
+    karte2[v] = 9;
+    v.clear();
+    v.push_back(".*");
+    v.push_back("**");
+    v.push_back("..");
+    karte1[0] = v;
+    karte2[v] = 0;
+}
+
+void Scase()
+{
+    string s;
+    cin>>s;
+    for(int a = 0; a < 3; a++)
+    {
+	for(int b = 0; b < s.size(); b++)
+	{
+	    //revisar
+	    if(b != s.size()-1)
+		cout<<karte1[s[b]-'0'][a]<<" ";
+	    else
+		cout<<karte1[s[b]-'0'][a]<<endl;
+	}
+    }
+}
+
+void Bcase(int n)
+{
+    vector<vector<string> > l(n);
+    string s;
+    for(int a = 0; a < n; a++)
+	l[a] = vector<string>(3);
+    //revisar
+    for(int a = 0; a < 3; a++)
+    {
+	for(int b = 0; b < n; b++)
+	{
+	    cin>>s;
+	    l[b][a] = s;
+	}
+    }
+    for(int a = 0; a < n; a++)
+	cout<<karte2[l[a]];
+    cout<<endl;
+}
+
+int main()
+{
+    build();
+    int n;
+    while(cin>>n && n != 0)
+    {
+	string s;
+	cin>>s;
+	if(s == "S")
+	    Scase();
+	else
+	    Bcase(n);
+    }
+    return 0;
+}

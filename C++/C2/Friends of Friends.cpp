@@ -1,0 +1,36 @@
+#include <iostream>
+#include <set>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    set<int> friends;
+    set<int> fof;
+    int n;
+    cin>>n;
+    vector<vector<int> > list(n);
+    for(int a = 0; a < n; a++)
+    {
+	int id, m;
+	cin>>id>>m;
+	friends.insert(id);
+	for(int b = 0; b < m; b++)
+	{
+	    int t;
+	    cin>>t;
+	    list[a].push_back(t);
+	}
+    }
+    for(int a = 0; a < n; a++)
+    {
+	for(int b = 0; b < list[a].size(); b++)
+	{
+	    if(friends.find(list[a][b]) == friends.end())
+		fof.insert(list[a][b]);
+	}
+    }
+    cout<<fof.size();
+    return 0;
+}

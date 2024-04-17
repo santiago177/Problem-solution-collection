@@ -1,0 +1,7 @@
+#include "globals.cpp"
+
+extern int my_global;
+void exec() {
+   my_global = 42;
+}
+

@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int euclid(long long a, long long b)
+{
+    int t;
+    while(b != 0)
+    {
+	t = b;
+	b = a%t;
+	a = t;
+    }
+    return a;
+}
+
+long long todec(string s)
+{
+    int pw = s.size() - 1;
+    long long ant = 0;
+    for(int a = 0; a < s.size(); a++)
+	ant += pow(2, pw--)*(s[a]-'0');
+    return ant;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    for(int z = 0; z < n; z++)
+    {
+	string g, h;
+	cin>>g>>h;
+	long long e, r;
+	e = todec(g); r = todec(h);
+	cout<<e<<" "<<r<<endl;
+	cout<<euclid(e, r)<<endl;
+	
+    }
+    return 0;
+}

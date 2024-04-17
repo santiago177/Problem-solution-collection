@@ -1,0 +1,43 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+typedef unsigned long long ll;
+
+ll mod = 1e9+7;
+
+ll modexp(ll base, ll exp) {
+    ll ans = 1;
+    while(exp > 0) {
+        if(exp % 2 == 1) {
+            ans = (ans*base)%mod;
+        }
+        exp >>= 1;
+        base = (base*base)%mod;
+    }
+    return ans;
+}
+
+int main() {
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
+    //freopen("xoring.in", "r", stdin);
+    int T;
+    cin>>T;
+    for(int z = 0; z < T; z++) {
+        int n, k=0;
+        cin>>n;
+        ll p = modexp(2, n-1);
+        vector<int> arr(n);
+        for(int i = 0; i < n; i++) {
+            int t;
+            cin>>t;
+            k |= t;
+        }
+        cout<<(p*k)%mod<<endl;
+    }
+    return 0;
+}
+

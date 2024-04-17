@@ -1,0 +1,12 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    goto Final;
+    cout<<"not in goto"<<endl;
+Final:
+    cout<<"out"<<endl;
+    return 0;
+}

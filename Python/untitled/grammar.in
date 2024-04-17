@@ -1,0 +1,6 @@
+S -> A B C | D E
+A -> dos B tres | EPSILON
+B -> B cuatro C cinco | EPSILON
+C -> seis A B | EPSILON
+D -> uno A E | B
+E -> tres

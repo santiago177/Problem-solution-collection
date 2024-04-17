@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class node
+{
+    public:
+	int begin, end, unterblatt;
+	vector<node*> sons;
+	
+	node()
+	{
+	    begin = end = unterblatt = 0;
+	    sons = vector<node*>(0);
+	}
+};
+
+void splitNode(node &n, int begin, int b2,vector<node*> &del, int end)
+{
+    node* p, t;
+    p = new node;
+    t = new node;
+    del.push_back(p);
+    del.push_back(t);
+    n.end = begin-1:
+    p.begin = begin;
+    p.end = end;
+    t.begin = b2;
+    t.end = end;  
+}
+
+void build(node &n, string s, vector<node*> &del, int begin)
+{
+    int t = 0;
+    if(n.sons.size() == 0)
+    {
+	node* p = new node;
+	*p.begin = begin;
+	*p.end = s.size()-1;
+	n.sons.push_back(p);
+	del.push_back(p);
+    }
+    for(int a = 0; a < n.sons.size(); a++)
+    {
+	for(int b = begin; b < s.size(); b++)
+	{
+	    if(s[n.sons[a].begin+t] == s[b])
+	}
+    }
+}
+
+
+int main()
+{
+
+    return 0;
+}

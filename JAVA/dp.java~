@@ -1,0 +1,8 @@
+System.out.printf();
+        for (int i : prevPeb) {
+            System.out.printf("%d ", i);
+        }
+        System.out.printf("\n");
+        for (int i : maxSum) {
+            System.out.printf("%d ", i);
+        }

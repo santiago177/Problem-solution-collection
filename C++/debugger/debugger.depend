@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1365044155 source:c:\users\santiago\desktop\unal\c++\debugger\main.cpp
+	<iostream>
+	<stack>
+	<cstdio>
+

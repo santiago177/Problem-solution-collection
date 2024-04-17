@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1371099209 source:c:\users\santiago\desktop\unal\c++\estudio\main.c
+	<stdio.h>
+	<stdlib.h>
+

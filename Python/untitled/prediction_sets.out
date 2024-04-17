@@ -1,0 +1,11 @@
+S -> A B C;                                                      cuatro, dos, seis, $
+S -> D E;                                                        cuatro, tres, uno
+A -> dos B tres;                                                 dos
+A -> EPSILON;                                                    cuatro, seis, tres, $, cinco
+B -> B cuatro C cinco;                                           cuatro
+B -> EPSILON;                                                    seis, cuatro, tres, $, cinco
+C -> seis A B;                                                   seis
+C -> EPSILON;                                                    cinco, $
+D -> uno A E;                                                    uno
+D -> B;                                                          cuatro, tres
+E -> tres;                                                       tres

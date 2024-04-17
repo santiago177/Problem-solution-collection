@@ -1,0 +1,151 @@
+#include<stdio.h>
+#include <stdlib.h> 
+
+typedef struct node node;
+
+int size = 0;
+
+struct node
+{
+    node *next;
+    int val;
+};
+
+
+void ins(int pos, int val, node *start)
+{
+    node *p = start;
+    if(pos == 0)
+    {
+	node *t = malloc(sizeof(node));
+	t->next = (*start).next;
+	t->val = val;
+	(*start).next = t;
+    }
+    else if(pos == size)
+    {
+	while((*p).next != NULL)
+	    p = (*p).next;
+	node *neu = malloc(sizeof(node));
+	neu->val = val;
+	(*p).next = neu;
+    }
+    else
+    {
+	int cont = 0;
+	p = (*start).next;
+	node *t;
+	while(cont < pos)
+	{
+	    t = p;
+	    p = (*p).next;
+	    cont++;
+	}
+	node *neu = malloc(sizeof(node));
+	neu->next = p;
+	neu->val = val;
+	(*t).next = neu;
+    }
+    size++;
+}
+
+void del(int pos, node *start)
+{
+    if(pos == 0)
+    {
+	node *temp = start->next;
+	(*start).next = (*(*start).next).next;
+	free(temp);
+    }
+    else
+    {
+	node *p = (*start).next;
+	node *t;
+	int cont = 0;
+	while(cont < pos)
+	{
+	    t = p;
+	    p = (*p).next;
+	    cont++;
+	}
+	(*t).next = (*p).next;
+	free(p);
+    }
+    size--;
+}
+
+void print(node *start)
+{
+    node *p = start->next;
+    if(size == 0)
+    {
+	printf("empty\n");
+	return;
+    }
+    while(p != NULL)
+    {
+	printf("%d ", p->val);
+	p = p->next; 
+    }
+    printf("\n");
+}
+
+int main()
+{
+    
+ 
+    char input[10], trash;
+    node start;
+    start.next = NULL;
+    while(1)
+    {
+	fgets(input, 10, stdin);
+	//printf("%s", input);
+	if(input[0] == 'f')
+	{
+	    int n;
+	    sscanf(input,"%c %d", &trash, &n);
+	    ins(0, n, &start);
+	}
+	if(input[0] == 'i')
+	{
+	    int index, n;
+	    sscanf(input,"%c %d %d", &trash, &index, &n);
+	    if(index >= size)
+		ins(size, n, &start);
+	    else
+		ins(index, n, &start);
+	}
+	if(input[0] == 'r')
+	{
+	    if(size == 0)
+	    {
+		print(&start);
+		continue;
+	    }
+	    del(0, &start);
+	}
+	if(input[0] == 'd')
+	{
+	    int index;
+	    sscanf(input,"%c %d", &trash, &index);
+	    if(index >= size)
+	    {
+		print(&start);
+		continue;
+	    }
+	    del(index, &start);
+	}
+	if(input[0] == 'q')
+	    break;
+	//ins(0, 5, &start);
+	//printf("%d %d\n", start.next->val, start.next->next->val);
+	//ins(0, 4, &start);
+	//del(0, &start);
+	//printf("%d %d\n", start.next->val, start.next->next->val);
+	print(&start);
+    }
+    return 0;
+ 
+}
+

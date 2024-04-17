@@ -1,0 +1,93 @@
+#include <iostream>
+#include <cstdio>
+#include <set>
+#include <map>
+#include <queue>
+
+using namespace std;
+
+//map<string, int> word_list;
+set<string> word_list;
+
+void fill()
+{
+    queue<string> q;
+    for(char a = 'a'; a <= 'z'; a++)
+    {
+	string t = "";
+	t += a;
+	//cout<<t<<endl;
+	q.push(t);
+	word_list.insert(t);
+    }
+    while(!q.empty())
+    {
+	string t = q.front();
+	string copy;
+	//cout<<copy<<endl;
+	q.pop();
+	for(char a = t[t.size()-1]+1; a <= 'z'; a++)
+	{
+	    copy = t;
+	    copy += a;
+	    if(copy.size() <= 5)
+	    {
+		cout<<copy<<", ";
+		q.push(copy);
+		word_list.insert(copy);
+	    }
+	}
+    }
+}
+
+/*void fill2()
+{
+    for(int a = 0; a < 83681; a++)
+    {
+	word_list[brutal[a]];
+    }
+    int c = 1;
+    for(map<string, int>::iterator it = word_list.begin(); it != word_list.end(); it++)
+    {
+	(*it).second = c;
+	c++;
+    }
+}*/
+
+int main()
+{
+    //freopen("wordindex.t", "w", stdout);
+    fill();
+    /*fill2();
+    string input;
+    while(cin>>input)
+    {
+	if(word_list.count(input) == 0)
+	    cout<<0<<endl;
+	else
+	    cout<<word_list[input]<<endl;
+    }*/
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

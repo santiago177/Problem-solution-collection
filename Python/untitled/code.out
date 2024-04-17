@@ -1,0 +1,741 @@
+def ARGL():
+    token = getNextToken()[0]
+    pred1 = ["id"]
+    if token in pred1:
+        match("id")
+        L1()
+    else:
+        syntax_error(set(pred1))
+
+
+def ARGS():
+    token = getNextToken()[0]
+    pred1 = ["token_par_izq"]
+    pred2 = ["leer", "para", "definir", "escribir", "segun", "mientras", "si", "finfuncion", "finsubproceso", "finsubalgoritmo", "borrar", "esperar", "repetir", "id", "dimension"]
+    if token in pred1:
+        match("token_par_izq")
+        T2()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def ARRAY():
+    token = getNextToken()[0]
+    pred1 = ["dimension"]
+    if token in pred1:
+        match("dimension")
+        match("id")
+        match("token_cor_izq")
+        EXPR()
+        match("token_cor_der")
+        L2()
+    else:
+        syntax_error(set(pred1))
+
+
+def ASIG():
+    token = getNextToken()[0]
+    pred1 = ["token_asig"]
+    if token in pred1:
+        match("token_asig")
+        EXPR()
+    else:
+        syntax_error(set(pred1))
+
+
+def ASIGCALL():
+    token = getNextToken()[0]
+    pred1 = ["id"]
+    if token in pred1:
+        match("id")
+        T4()
+    else:
+        syntax_error(set(pred1))
+
+
+def BLOCK():
+    token = getNextToken()[0]
+    pred1 = ["finproceso", "finsubalgoritmo", "finsi", "finpara", "finalgoritmo", "caso", "de", "hasta", "sino", "finfuncion", "finmientras", "finsubproceso", "finsegun"]
+    pred2 = ["leer", "para", "definir", "escribir", "segun", "mientras", "si", "borrar", "esperar", "repetir", "id", "dimension"]
+    if token in pred1:
+        return
+    elif token in pred2:
+        STORCOM()
+        L5()
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def CALL():
+    token = getNextToken()[0]
+    pred1 = ["token_par_izq"]
+    pred2 = ["token_igual", "token_mayor", "token_mas", "escribir", "token_mayor_igual", "milisegundos", "minutos", "token_y", "mientras", "finfuncion", "finmientras", "finsubproceso", "borrar", "token_pot", "leer", "para", "finalgoritmo", "token_mod""token_o", "definir", "si", "id", "token_dosp", "token_dif", "token_pyc", "finsi", "token_menor", "token_menos", "entonces", "finpara", "token_mul", "finsubalgoritmo", "token_div", "segun", "repetir", "hacer", "finproceso", "sino", "caso", "finsegun", "token_cor_der", "hasta", "de", "token_coma", "token_menor_igual", "segundos", "token_par_der", "esperar", "dimension", "con"]
+    if token in pred1:
+        match("token_par_izq")
+        OPEXPR()
+        L3()
+        match("token_par_der")
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def CASEL():
+    token = getNextToken()[0]
+    pred1 = ["finsegun"]
+    pred2 = ["caso"]
+    if token in pred1:
+        return
+    elif token in pred2:
+        match("caso")
+        EXPR()
+        match("token_dosp")
+        BLOCK()
+        L4()
+        DEFAULT()
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def CLS():
+    token = getNextToken()[0]
+    pred1 = ["borrar"]
+    if token in pred1:
+        match("borrar")
+        match("pantalla")
+    else:
+        syntax_error(set(pred1))
+
+
+def COM():
+    token = getNextToken()[0]
+    pred1 = ["esperar", "leer", "definir", "borrar", "escribir", "dimension", "id"]
+    if token in pred1:
+        COMID()
+        match("token_pyc")
+    else:
+        syntax_error(set(pred1))
+
+
+def COMID():
+    token = getNextToken()[0]
+    pred1 = ["definir"]
+    pred2 = ["id"]
+    pred3 = ["escribir"]
+    pred4 = ["leer"]
+    pred5 = ["dimension"]
+    pred6 = ["borrar"]
+    pred7 = ["esperar"]
+    if token in pred1:
+        DEF()
+    elif token in pred2:
+        ASIGCALL()
+    elif token in pred3:
+        WRITE()
+    elif token in pred4:
+        READ()
+    elif token in pred5:
+        ARRAY()
+    elif token in pred6:
+        CLS()
+    elif token in pred7:
+        WAIT()
+    else:
+        syntax_error(set(pred1+pred2+pred3+pred4+pred5+pred6+pred7))
+
+
+def DEF():
+    token = getNextToken()[0]
+    pred1 = ["definir"]
+    if token in pred1:
+        match("definir")
+        match("id")
+        L1()
+        match("como")
+        TIPO()
+    else:
+        syntax_error(set(pred1))
+
+
+def DEFAULT():
+    token = getNextToken()[0]
+    pred1 = ["de"]
+    pred2 = ["finsegun"]
+    if token in pred1:
+        match("de")
+        match("otro")
+        match("modo")
+        match("token_dosp")
+        BLOCK()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def DOWHILE():
+    token = getNextToken()[0]
+    pred1 = ["repetir"]
+    if token in pred1:
+        match("repetir")
+        BLOCK()
+        match("hasta")
+        match("que")
+        EXPR()
+    else:
+        syntax_error(set(pred1))
+
+
+def ELIF():
+    token = getNextToken()[0]
+    pred1 = ["sino"]
+    pred2 = ["finsi"]
+    if token in pred1:
+        match("sino")
+        BLOCK()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def ENDPROC():
+    token = getNextToken()[0]
+    pred1 = ["finproceso"]
+    pred2 = ["finalgoritmo"]
+    if token in pred1:
+        match("finproceso")
+    elif token in pred2:
+        match("finalgoritmo")
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def ENDSUBPROC():
+    token = getNextToken()[0]
+    pred1 = ["finsubproceso"]
+    pred2 = ["finsubalgoritmo"]
+    pred3 = ["finfuncion"]
+    if token in pred1:
+        match("finsubproceso")
+    elif token in pred2:
+        match("finsubalgoritmo")
+    elif token in pred3:
+        match("finfuncion")
+    else:
+        syntax_error(set(pred1+pred2+pred3))
+
+
+def EXPR():
+    token = getNextToken()[0]
+    pred1 = ["token_real", "token_neg", "verdadero", "token_entero", "token_cadena", "id", "falso"]
+    pred2 = ["token_par_izq"]
+    if token in pred1:
+        TOK()
+        L6()
+    elif token in pred2:
+        match("token_par_izq")
+        EXPR()
+        match("token_par_der")
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def FOR():
+    token = getNextToken()[0]
+    pred1 = ["para"]
+    if token in pred1:
+        match("para")
+        ASIG()
+        match("hasta")
+        EXPR()
+        STEP()
+        match("hacer")
+        BLOCK()
+        match("finpara")
+    else:
+        syntax_error(set(pred1))
+
+
+def IF():
+    token = getNextToken()[0]
+    pred1 = ["si"]
+    if token in pred1:
+        match("si")
+        EXPR()
+        match("entonces")
+        BLOCK()
+        ELIF()
+        match("finsi")
+    else:
+        syntax_error(set(pred1))
+
+
+def L1():
+    token = getNextToken()[0]
+    pred1 = ["token_coma"]
+    pred2 = ["token_par_der", "token_pyc", "como"]
+    if token in pred1:
+        match("token_coma")
+        match("id")
+        L1()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def L2():
+    token = getNextToken()[0]
+    pred1 = ["token_coma"]
+    pred2 = ["token_pyc"]
+    if token in pred1:
+        match("token_coma")
+        match("id")
+        match("token_cor_izq")
+        EXPR()
+        match("token_cor_der")
+        L2()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def L3():
+    token = getNextToken()[0]
+    pred1 = ["token_coma"]
+    pred2 = ["token_par_der", "token_pyc"]
+    if token in pred1:
+        match("token_coma")
+        EXPR()
+        L3()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def L4():
+    token = getNextToken()[0]
+    pred1 = ["caso"]
+    pred2 = ["de", "finsegun"]
+    if token in pred1:
+        match("caso")
+        EXPR()
+        match("token_dosp")
+        BLOCK()
+        L4()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def L5():
+    token = getNextToken()[0]
+    pred1 = ["leer", "para", "definir", "escribir", "segun", "mientras", "si", "borrar", "esperar", "repetir", "id", "dimension"]
+    pred2 = ["hasta", "finsubalgoritmo", "finsi", "finpara", "finalgoritmo", "caso", "de", "finproceso", "sino", "finfuncion", "finmientras", "finsubproceso", "finsegun"]
+    if token in pred1:
+        STORCOM()
+        L5()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def L6():
+    token = getNextToken()[0]
+    pred1 = ["token_mas", "token_mayor_igual", "token_mod""token_o", "token_dif", "token_menos", "token_pot", "token_y", "token_mul", "token_coma", "token_menor_igual", "token_div", "token_menor", "token_mayor", "token_igual"]
+    pred2 = ["minutos", "escribir", "milisegundos", "finproceso", "mientras", "finfuncion", "finmientras", "finsubproceso", "id", "leer", "para", "finalgoritmo", "definir", "hacer", "token_pyc", "finsi", "de", "segun", "finpara", "sino", "finsubalgoritmo", "token_dosp", "entonces", "repetir", "borrar", "caso", "finsegun", "token_cor_der", "hasta", "si", "token_coma", "segundos", "token_par_der", "esperar", "dimension", "con"]
+    if token in pred1:
+        OP()
+        TOK()
+        L6()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def OP():
+    token = getNextToken()[0]
+    pred1 = ["token_igual"]
+    pred2 = ["token_dif"]
+    pred3 = ["token_menor"]
+    pred4 = ["token_mayor"]
+    pred5 = ["token_menor_igual"]
+    pred6 = ["token_mayor_igual"]
+    pred7 = ["token_mas"]
+    pred8 = ["token_menos"]
+    pred9 = ["token_div"]
+    pred10 = ["token_mul"]
+    pred11 = ["token_mod""token_o"]
+    pred12 = ["token_y"]
+    pred13 = ["token_coma"]
+    pred14 = ["token_pot"]
+    if token in pred1:
+        match("token_igual")
+    elif token in pred2:
+        match("token_dif")
+    elif token in pred3:
+        match("token_menor")
+    elif token in pred4:
+        match("token_mayor")
+    elif token in pred5:
+        match("token_menor_igual")
+    elif token in pred6:
+        match("token_mayor_igual")
+    elif token in pred7:
+        match("token_mas")
+    elif token in pred8:
+        match("token_menos")
+    elif token in pred9:
+        match("token_div")
+    elif token in pred10:
+        match("token_mul")
+    elif token in pred11:
+        match("token_mod""token_o")
+    elif token in pred12:
+        match("token_y")
+    elif token in pred13:
+        match("token_coma")
+    elif token in pred14:
+        match("token_pot")
+    else:
+        syntax_error(set(pred1+pred2+pred3+pred4+pred5+pred6+pred7+pred8+pred9+pred10+pred11+pred12+pred13+pred14))
+
+
+def OPEXPR():
+    token = getNextToken()[0]
+    pred1 = ["token_neg", "verdadero", "token_entero", "token_par_izq", "falso", "token_real", "token_cadena", "id"]
+    pred2 = ["token_par_der", "token_coma"]
+    if token in pred1:
+        EXPR()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def PROC():
+    token = getNextToken()[0]
+    pred1 = ["proceso"]
+    pred2 = ["algoritmo"]
+    if token in pred1:
+        match("proceso")
+    elif token in pred2:
+        match("algoritmo")
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def READ():
+    token = getNextToken()[0]
+    pred1 = ["leer"]
+    if token in pred1:
+        match("leer")
+        match("id")
+        L1()
+    else:
+        syntax_error(set(pred1))
+
+
+def RET():
+    token = getNextToken()[0]
+    pred1 = ["id"]
+    if token in pred1:
+        match("id")
+        T1()
+    else:
+        syntax_error(set(pred1))
+
+
+def S():
+    token = getNextToken()[0]
+    pred1 = ["subproceso", "subalgoritmo", "funcion"]
+    pred2 = ["proceso", "algoritmo"]
+    if token in pred1:
+        SUBPR()
+        PROC()
+        match("id")
+        BLOCK()
+        ENDPROC()
+    elif token in pred2:
+        PROC()
+        match("id")
+        BLOCK()
+        ENDPROC()
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def STATEMENT():
+    token = getNextToken()[0]
+    pred1 = ["si"]
+    pred2 = ["mientras"]
+    pred3 = ["repetir"]
+    pred4 = ["segun"]
+    pred5 = ["para"]
+    if token in pred1:
+        IF()
+    elif token in pred2:
+        WHILE()
+    elif token in pred3:
+        DOWHILE()
+    elif token in pred4:
+        SWITCH()
+    elif token in pred5:
+        FOR()
+    else:
+        syntax_error(set(pred1+pred2+pred3+pred4+pred5))
+
+
+def STEP():
+    token = getNextToken()[0]
+    pred1 = ["con"]
+    pred2 = ["hacer"]
+    if token in pred1:
+        match("con")
+        match("paso")
+        EXPR()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def STORCOM():
+    token = getNextToken()[0]
+    pred1 = ["mientras", "si", "repetir", "para", "segun"]
+    pred2 = ["borrar", "esperar", "leer", "definir", "escribir", "id", "dimension"]
+    if token in pred1:
+        STATEMENT()
+    elif token in pred2:
+        COM()
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def SUBPR():
+    token = getNextToken()[0]
+    pred1 = ["subproceso", "subalgoritmo", "funcion"]
+    if token in pred1:
+        SUBPROC()
+        RET()
+        ARGS()
+        BLOCK()
+        ENDSUBPROC()
+    else:
+        syntax_error(set(pred1))
+
+
+def SUBPROC():
+    token = getNextToken()[0]
+    pred1 = ["subproceso"]
+    pred2 = ["subalgoritmo"]
+    pred3 = ["funcion"]
+    if token in pred1:
+        match("subproceso")
+    elif token in pred2:
+        match("subalgoritmo")
+    elif token in pred3:
+        match("funcion")
+    else:
+        syntax_error(set(pred1+pred2+pred3))
+
+
+def SWITCH():
+    token = getNextToken()[0]
+    pred1 = ["segun"]
+    if token in pred1:
+        match("segun")
+        EXPR()
+        match("hacer")
+        CASEL()
+        match("finsegun")
+    else:
+        syntax_error(set(pred1))
+
+
+def T1():
+    token = getNextToken()[0]
+    pred1 = ["token_asig"]
+    pred2 = ["para", "token_par_izq", "segun", "mientras", "finfuncion", "finsubproceso", "finsubalgoritmo", "borrar", "repetir", "id", "leer", "definir", "escribir", "si", "esperar", "dimension"]
+    if token in pred1:
+        match("token_asig")
+        match("id")
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def T2():
+    token = getNextToken()[0]
+    pred1 = ["token_par_der"]
+    pred2 = ["id"]
+    if token in pred1:
+        match("token_par_der")
+    elif token in pred2:
+        ARGL()
+        match("token_par_der")
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def T3():
+    token = getNextToken()[0]
+    pred1 = ["tecla"]
+    pred2 = ["token_neg", "verdadero", "token_entero", "token_par_izq", "falso", "token_real", "token_cadena", "id"]
+    if token in pred1:
+        match("tecla")
+    elif token in pred2:
+        EXPR()
+        TIME()
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def T4():
+    token = getNextToken()[0]
+    pred1 = ["token_pyc", "token_par_izq"]
+    pred2 = ["token_asig"]
+    if token in pred1:
+        CALL()
+    elif token in pred2:
+        ASIG()
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def T5():
+    token = getNextToken()[0]
+    pred1 = ["token_mayor", "token_mas", "escribir", "token_mayor_igual", "milisegundos", "token_par_izq", "con", "token_y", "mientras", "finfuncion", "finmientras", "finsubproceso", "borrar", "token_pot", "leer", "para", "finalgoritmo", "token_mod""token_o", "definir", "si", "id", "token_dosp", "token_dif", "token_pyc", "finsi", "minutos", "token_menos", "entonces", "finpara", "token_mul", "finsubalgoritmo", "token_div", "segun", "repetir", "hacer", "finproceso", "sino", "caso", "finsegun", "token_cor_der", "hasta", "de", "token_coma", "token_menor_igual", "segundos", "token_par_der", "esperar", "token_menor", "dimension", "token_igual"]
+    pred2 = ["token_mayor", "token_mas", "escribir", "token_mayor_igual", "milisegundos", "minutos", "con", "token_y", "mientras", "finfuncion", "finmientras", "finsubproceso", "borrar", "token_pot", "leer", "para", "finalgoritmo", "token_mod""token_o", "definir", "si", "id", "token_dosp", "token_menor", "token_pyc", "finsi", "token_dif", "token_menos", "entonces", "finpara", "token_mul", "finsubalgoritmo", "token_div", "segun", "repetir", "hacer", "finproceso", "sino", "caso", "finsegun", "token_cor_der", "hasta", "de", "token_coma", "token_menor_igual", "segundos", "token_par_der", "esperar", "dimension", "token_igual"]
+    if token in pred1:
+        CALL()
+    elif token in pred2:
+        return
+    else:
+        syntax_error(set(pred1+pred2))
+
+
+def TIME():
+    token = getNextToken()[0]
+    pred1 = ["minutos"]
+    pred2 = ["segundos"]
+    pred3 = ["milisegundos"]
+    if token in pred1:
+        match("minutos")
+    elif token in pred2:
+        match("segundos")
+    elif token in pred3:
+        match("milisegundos")
+    else:
+        syntax_error(set(pred1+pred2+pred3))
+
+
+def TIPO():
+    token = getNextToken()[0]
+    pred1 = ["real"]
+    pred2 = ["texto"]
+    pred3 = ["numerico"]
+    pred4 = ["logico"]
+    pred5 = ["numero"]
+    pred6 = ["cadena"]
+    pred7 = ["entero"]
+    if token in pred1:
+        match("real")
+    elif token in pred2:
+        match("texto")
+    elif token in pred3:
+        match("numerico")
+    elif token in pred4:
+        match("logico")
+    elif token in pred5:
+        match("numero")
+    elif token in pred6:
+        match("cadena")
+    elif token in pred7:
+        match("entero")
+    else:
+        syntax_error(set(pred1+pred2+pred3+pred4+pred5+pred6+pred7))
+
+
+def TOK():
+    token = getNextToken()[0]
+    pred1 = ["token_real"]
+    pred2 = ["token_entero"]
+    pred3 = ["token_cadena"]
+    pred4 = ["id"]
+    pred5 = ["verdadero"]
+    pred6 = ["falso"]
+    pred7 = ["token_neg"]
+    if token in pred1:
+        match("token_real")
+    elif token in pred2:
+        match("token_entero")
+    elif token in pred3:
+        match("token_cadena")
+    elif token in pred4:
+        match("id")
+        T5()
+    elif token in pred5:
+        match("verdadero")
+    elif token in pred6:
+        match("falso")
+    elif token in pred7:
+        UNOP()
+        TOK()
+    else:
+        syntax_error(set(pred1+pred2+pred3+pred4+pred5+pred6+pred7))
+
+
+def UNOP():
+    token = getNextToken()[0]
+    pred1 = ["token_neg"]
+    if token in pred1:
+        match("token_neg")
+    else:
+        syntax_error(set(pred1))
+
+
+def WAIT():
+    token = getNextToken()[0]
+    pred1 = ["esperar"]
+    if token in pred1:
+        match("esperar")
+        T3()
+    else:
+        syntax_error(set(pred1))
+
+
+def WHILE():
+    token = getNextToken()[0]
+    pred1 = ["mientras"]
+    if token in pred1:
+        match("mientras")
+        EXPR()
+        match("hacer")
+        BLOCK()
+        match("finmientras")
+    else:
+        syntax_error(set(pred1))
+
+
+def WRITE():
+    token = getNextToken()[0]
+    pred1 = ["escribir"]
+    if token in pred1:
+        match("escribir")
+        EXPR()
+        L3()
+    else:
+        syntax_error(set(pred1))
+
+

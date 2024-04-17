@@ -1,0 +1,13 @@
+<algoritmo,1,1>
+<id,sin_titulo,1,11>
+<tk_entero,10,2,5>
+<tk_real,12.31221,3,5>
+<tk_cadena,esto es una cadena,4,5>
+<tk_cadena,esto tambien,5,5>
+<tk_cadena,e,10,5>
+<tk_entero,112,11,5>
+<tk_menos,11,9>
+<tk_entero,122,11,11>
+<tk_mul,11,15>
+<tk_entero,3,11,17>
+<finalgoritmo,12,1>

@@ -1,0 +1,53 @@
+S -> SUBPR proceso id BLOCK finproceso | proceso id BLOCK finproceso
+BLOCK -> EPSILON | STORCOM L5
+L5 -> STORCOM L5
+L5 -> EPSILON
+STORCOM -> STATEMENT | COM
+SUBPR -> subproceso RET ARGS BLOCK finsubproceso
+RET -> id T1
+T1 -> token_asig id | EPSILON
+ARGS -> token_par_der T2 | EPSILON
+ARGL -> id L1
+T2 -> token_par_izq | ARGL token_par_izq
+STATEMENT -> IF | WHILE | DOWHILE | SWITCH | FOR
+COM -> COMID token_pyc
+COMID -> DEF | ASIGCALL | WRITE | READ | ARRAY | CLS | WAIT
+WRITE -> escribir EXPR L3
+L3 -> token_coma EXPR L3
+L3 -> EPSILON
+READ -> leer id L1
+ASIGCALL -> id T4
+T4 -> CALL | ASIG
+CALL -> token_par_izq EXPR L3 token_par_der
+ARRAY -> dimension id token_cor_izq EXPR token_cor_der L2
+
+L2 -> token_coma id token_cor_izq EXPR token_cor_der L2
+L2 -> EPSILON
+IF  -> si PAREXPR entonces BLOCK ELIF finsi
+ELIF -> sino BLOCK | EPSILON
+PAREXPR ->  token_par_izq EXPR token_par_der | EXPR
+FOR -> para ASIG hasta EXPR STEP hacer BLOCK finpara
+STEP -> con paso EXPR | EPSILON
+WHILE -> mientras EXPR hacer BLOCK finmientras
+DOWHILE -> repetir BLOCK hasta que EXPR
+SWITCH -> segun EXPR hacer CASEL finsegun
+CASEL -> EPSILON | caso EXPR token_dosp BLOCK L4 DEFAULT
+DEFAULT -> de otro modo : BLOCK | EPSILON
+L4 -> caso EXPR token_dosp BLOCK L4 | EPSILON
+DEF -> definir id L1 como TIPO
+L1 -> token_coma id L1
+L1 -> EPSILON
+ASIG -> token_asig EXPR
+CLS -> borrar pantalla
+WAIT -> esperar T3
+T3 -> tecla |  EXPR TIME
+TIME -> minutos | segundos | milisegundos
+EXPR -> TOK L6 | UNOP EXPR | ( EXPR )
+L6 -> OP TOK L6
+L6 -> EPSILON
+TOK -> token_real | token_entero | token_cadena | id T5 | verdadero | falso
+T5 -> CALL | EPSILON
+OP -> operador
+UNOP -> token_neg
+TIPO -> real | texto | numerico | logico
+

@@ -1,0 +1,21 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+
+int main()
+{
+    int n, t;
+    std::vector<int> zahlen;
+    std::cin>>n;
+    for(int a = 0; a < n; a++)
+    {
+	std::cin>>t;
+	zahlen.push_back(t);
+    }
+    sort(zahlen.begin(), zahlen.end());
+    int pos = ((n+1)/2)+1;
+    std::cout<<pos<<std::endl;
+    std::cout<<zahlen[pos]<<std::endl;
+    return 0;
+}

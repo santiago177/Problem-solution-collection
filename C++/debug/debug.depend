@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1425787539 source:c:\users\santiago\desktop\unal\2015 - i\modelos\problema 1.6\simulation.cpp
+	<iostream>
+	<cstdio>
+	<cmath>
+	<queue>
+	<ctime>
+	<cstdlib>
+

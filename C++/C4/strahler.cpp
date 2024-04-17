@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <cstdio>
+
+using namespace std;
+
+void calc(vector<int> &order, vector<vector<int> > &graph, int node)
+{
+    if(graph[node].size() == 0)
+    {
+	order[node] = 1;
+	return;
+    }
+    vector<int> count(1005, 0);
+    int max = 0;
+    for(int a = 0; a < graph[node].size(); a++)
+    {
+	if(order[graph[node][a]] == -1)
+	    calc(order, graph, graph[node][a]);
+	if(order[graph[node][a]] > max)
+	    max = order[graph[node][a]];
+	count[order[graph[node][a]]]++;
+    }
+    if(count[max] > 1)
+	order[node] = max+1;
+    else
+	order[node] = max;
+}
+
+
+int main()
+{
+    int cs;
+    cin>>cs;
+    for(int z = 0; z < cs; z++)
+    {
+	int k, m, p;
+	cin>>k>>m>>p;
+	vector<vector<int> > graph(m);
+	vector<int> order(m, -1);
+	for(int a = 0; a < p; a++)
+	{
+	    int s, t;
+	    cin>>s>>t;
+	    graph[t-1].push_back(s-1);
+	}
+	calc(order, graph, m-1);
+	cout<<k<<" "<<order[m-1]<<endl;
+    }
+    return 0;
+}

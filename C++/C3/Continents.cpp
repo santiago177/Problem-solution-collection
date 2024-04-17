@@ -1,0 +1,128 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <sstream>
+#include <queue>
+#include <utility>
+
+using namespace std;
+
+typedef pair<int, int> pii;
+
+pair<int, int> offset[4];
+void build()
+{
+    offset[0] = make_pair(0, 1);
+    offset[1] = make_pair(0, -1);
+    offset[2] = make_pair(1, 0);
+    offset[3] = make_pair(-1, 0);
+}
+
+int BFS(char matrix[][25], bool besucht[][25], pii start, char land)
+{
+    int zahl = 0;
+    queue<pii> q;
+    q.push(start);
+    besucht[start.first][start.second] = true;
+    while(!q.empty())
+    {
+//	cout<<"in"<<endl;
+	pii p = q.front();
+	q.pop();
+	zahl++;
+	for(int a = 0; a < 4; a++)
+	{
+	    int x, y;
+	    x = p.first + offset[a].first;
+	    y = p.second + offset[a].second;
+	    if(!besucht[x][y] && matrix[x][y] == land)
+	    {
+		besucht[x][y] == true;
+		q.push(make_pair(x, y));
+	    }
+	}
+    }
+    return zahl;
+}
+
+int main()
+{
+    //freopen("Continents.in", "r", stdin);
+    char matrix[25][25], car1 = '$', car2, cap;
+    int m, n, c1, c2, max = 0;
+    bool besucht[25][25], flag = false, erste = false;
+    string s;
+    build();
+    while(getline(cin, s))
+    {
+	stringstream st(s);
+	st>>m>>n;
+	//cout<<"m , n"<<m<<" "<<n<<endl;
+	memset(matrix, 0, 100);
+	/*for(int a = 0; a <= m+1; a++)
+	{
+            matrix[0][a] = matrix[a][0] = matrix[m+1][a] = matrix[a][n+1] = '$';
+	    besucht[0][a] = besucht[a][0] = besucht[m+1][a] = besucht[a][n+1] = false;
+	}*/
+	/*for(int a = 0; a <= m+1; a++)
+	{
+	    for(int b = 0; b <= n+1; b++)
+	    cout<<matrix[a][b];
+	    cout<<endl;
+	}*/
+	for(int a = 0; a < m; a++)
+	{
+	    getline(cin, s);
+	    for(int b = 0; b < n; b++)
+	    {
+		if(!flag && s[b] != car1)
+		{
+		    car1 = s[b];
+		    flag = true;
+		}
+		if(flag && s[b] != car1)
+		    car2 = s[b];
+		matrix[a+1][b+1] = s[b];
+		besucht[a+1][b+1] = false;
+	    }
+	}
+/*	for(int a = 0; a <= m+1; a++)
+	{
+	    for(int b = 0; b <= n+1; b++)
+	    cout<<matrix[a][b];
+	    cout<<endl;
+	}*/
+	getline(cin, s);
+//	cin>>c1>>c2;
+	stringstream st1(s);
+	st1>>c1>>c2;
+	if(matrix[c1+1][c2+1] == car1)
+	    cap = car1;
+	else
+	    cap = car2;
+	//cout<<"cap = "<<cap<<endl;
+	BFS(matrix, besucht, make_pair(c1+1, c2+1), cap);
+	for(int a = 1; a <= m; a++)
+	{
+	    for(int b = 1; b <= n; b++)
+	    {
+		if(matrix[a][b] == cap && !besucht[a][b])
+		{
+		    int p = BFS(matrix, besucht, make_pair(a, b), cap);
+		    if(p > max)
+			max = p;
+
+		}
+	    }
+	}
+	/*for(int a = 0; a <= m+1; a++)
+	{
+	    for(int b = 0; b <= n+1; b++)
+	    cout<<besucht[a][b];
+	    cout<<endl;
+	}*/
+	cout<<max<<endl;
+	getline(cin, s);
+    }
+    return 0;
+}
